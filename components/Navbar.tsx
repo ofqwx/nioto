@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { Fragment, ReactElement, ReactNode, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import DropDown from "./DropDown";
 import { MoonIcon, SunIcon } from "./icons";
@@ -51,23 +51,28 @@ export default function Navbar() {
       </Link>
 
       <DropDown
-        name="Projects"
-        items={[
-          <Link key={"beetle_list_item"} href="/projects/beetle" passHref>
-            <NavLink>Beetle</NavLink>
-          </Link>,
-        ]}
-      />
-
-      <DropDown
         name="Tools"
         items={[
           <Link
-            key={"sodium_consumption_list_item"}
-            href={"/tools/sodium-consumption"}
+            key={"density_altitude_list_item"}
+            href={"/tools/density-altitude"}
             passHref
           >
-            <NavLink>{"Sodium consumption"}</NavLink>
+            <NavLink>Density altitude</NavLink>
+          </Link>,
+          <Link
+            key={"body_energy_consumption_list_item"}
+            href={"/tools/body-energy-consumption"}
+            passHref
+          >
+            <NavLink>Body energy consumption</NavLink>
+          </Link>,
+          <Link
+            key={"pain_cave_monitor"}
+            href={"/tools/pain-cave-monitor"}
+            passHref
+          >
+            <NavLink>Pain cave monitor</NavLink>
           </Link>,
         ]}
       />

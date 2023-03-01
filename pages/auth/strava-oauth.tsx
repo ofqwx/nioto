@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
-import useLocalStorage from "../../hooks/use-local-storage";
-import useAuth from "./hooks/useAuth";
+import { ReactElement, useEffect } from "react";
+import Layout from "../../components/Layout";
+import { useAuth } from "../../hooks";
 
 type StravaAuthResponseData = {
   token_type: string;
@@ -70,3 +70,7 @@ export default function StravaOAuth(): JSX.Element {
 
   return <p>Redirecting...</p>;
 }
+
+StravaOAuth.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};

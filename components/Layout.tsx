@@ -5,15 +5,17 @@ import Navbar from "./Navbar";
 
 type LayoutProps = {
   children: ReactNode;
+  fullWidth?: boolean;
 };
 
-const Main = styled.main`
-  max-width: 1200px;
+const Main = styled.main<LayoutProps>`
+  max-width: ${(props) => (props.fullWidth ? "100%" : "1200px")};
   margin: 0 auto;
   padding: ${(props) => props.theme.sizes.s5};
-`
+  p,
+`;
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children, fullWidth = false }: LayoutProps) {
   return (
     <Fragment>
       <Head>
@@ -22,9 +24,9 @@ export default function Layout({ children }: LayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar />
-      
-      <Main>{children}</Main>
+      {!fullWidth ? <Navbar /> : null}
+
+      <Main fullWidth={fullWidth}>{children}</Main>
     </Fragment>
   );
 }

@@ -2,10 +2,11 @@ import Layout from "../components/Layout";
 import { AppProps } from "next/app";
 import AuthProvider from "../components/AuthProvider";
 import { createGlobalStyle } from "styled-components";
-import React, { Fragment } from "react";
+import React, { Fragment, ReactElement, ReactNode } from "react";
 import FontStyles from "../styles/FontStyles";
 import ThemeProvider from "../components/theme/ThemeProvider";
 import { light, dark } from "../components/theme/theme";
+import { NextPage } from "next";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -20,17 +21,23 @@ const GlobalStyle = createGlobalStyle`
   
 `;
 
-function MyApp({ Component, pageProps }: AppProps) {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page);
+
   return (
     <Fragment>
       <FontStyles />
-      <ThemeProvider themes={{ light,  dark }}>
+      <ThemeProvider themes={{ light, dark }}>
         <GlobalStyle />
-        <Layout>
-          <AuthProvider>
-            <Component {...pageProps} />
-          </AuthProvider>
-        </Layout>
+        <AuthProvider>{getLayout(<Component {...pageProps} />)}</AuthProvider>
       </ThemeProvider>
     </Fragment>
   );
